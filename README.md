@@ -1,2 +1,2 @@
 # jellyfishBlogger
- A blog, powered by React, MongoDB, Node.js & Express.js,
+ A blog powered by React, Express.js, MongoDB, & Firebase authentication

@@ -8,6 +8,9 @@ const mongoose= require('mongoose');
 const PORT = process.env.PORT || 3000;
 const MONGODB_URI = `mongodb://${process.env.MONGO_INITDB_ROOT_USERNAME}:${process.env.MONGO_INITDB_ROOT_PASSWORD}@db:27017/${process.env.MONGO_INITDB_DATABASE}?authSource=admin`;
 
+const verifyToken = require('./routes/verifyToken');
+app.use('/api/verifyToken', verifyToken);
+
 //console.log('MONGODB_URI:', MONGODB_URI);
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,

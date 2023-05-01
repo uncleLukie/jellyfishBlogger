@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from './firebase';
+import { auth } from '../../firebase/firebase';
 import { Button, Container, TextField, Typography, Box } from '@mui/material';
+import './SignUp.css';
+
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -28,9 +30,9 @@ const SignUp = () => {
               alignItems: 'center',
             }}
         >
-          <Typography component="h1" variant="h5">
-            Sign Up
-          </Typography>
+            <Typography component="h1" variant="h5" className="custom-text">
+                Sign Up
+            </Typography>
           <Box component="form" onSubmit={signUp} sx={{ mt: 3 }}>
             <TextField
                 margin="normal"

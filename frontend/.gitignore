@@ -24,3 +24,5 @@ yarn-error.log*
 
 # JetBrains IDE react buddy
 src/dev/
+
+package-lock.json

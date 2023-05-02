@@ -13,6 +13,11 @@ exports.createPost = async (req, res) => {
             return res.status(404).json({ message: 'Author not found' });
         }
 
+        // Check if the user is allowed to post
+        if (!user.canPost) {
+            return res.status(403).json({ message: 'User is not allowed to create posts' });
+        }
+
         // Check if the category exists
         const categoryObj = await Category.findById(category);
         if (!categoryObj) {

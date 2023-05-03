@@ -11,6 +11,9 @@ const SignUp = () => {
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [error, setError] = useState(null);
+    const apiUrl = process.env.REACT_APP_API_URL;
+    //console.log('API URL:', apiUrl);
+
 
     const signUp = async (e) => {
         e.preventDefault();
@@ -19,9 +22,9 @@ const SignUp = () => {
             console.log('User signed up successfully:', userCredential.user);
             setError(null);
 
-            // Send the user data to your backend API
+            // Send the user data to our backend API
             const apiUrl = process.env.REACT_APP_API_URL;
-            const response = await fetch(`${apiUrl}/users`, {
+            const response = await fetch(`${apiUrl}/users/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -36,7 +39,18 @@ const SignUp = () => {
             });
 
             if (!response.ok) {
-                throw new Error('Error creating user in the database');
+                const responseText = await response.text();
+                console.log('Unexpected server response:', responseText);
+
+                let errorMessage = 'Error creating user in the database';
+                try {
+                    const errorData = JSON.parse(responseText);
+                    errorMessage = errorData.message || errorMessage;
+                } catch (e) {
+                    console.error('Failed to parse server response as JSON:', e);
+                }
+
+                throw new Error(errorMessage);
             }
 
         } catch (error) {
@@ -62,6 +76,7 @@ const SignUp = () => {
                         required
                         fullWidth
                         label="Username"
+                        autoComplete="username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
@@ -70,6 +85,7 @@ const SignUp = () => {
                         required
                         fullWidth
                         label="First Name"
+                        autoComplete="given-name"
                         value={firstname}
                         onChange={(e) => setFirstname(e.target.value)}
                     />
@@ -78,6 +94,7 @@ const SignUp = () => {
                         required
                         fullWidth
                         label="Last Name"
+                        autoComplete="family-name"
                         value={lastname}
                         onChange={(e) => setLastname(e.target.value)}
                     />
@@ -87,6 +104,7 @@ const SignUp = () => {
                         fullWidth
                         label="Email"
                         type="email"
+                        autoComplete="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
@@ -96,6 +114,7 @@ const SignUp = () => {
                         fullWidth
                         label="Password"
                         type="password"
+                        autoComplete="new-password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />

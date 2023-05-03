@@ -48,31 +48,40 @@ exports.deleteUser = async (req, res) => {
 
 // Register a new user
 exports.registerUser = async (req, res) => {
-    try {
-        const {uid, username, firstname, lastname} = req.body;
+    const { uid, email, username, firstname, lastname } = req.body;
 
+    try {
         // Check if the user with the same Firebase UID exists
-        const existingUser = await User.findOne({uid});
+        const existingUser = await User.findOne({ uid });
         if (existingUser) {
-            return res.status(400).json({message: 'User already exists'});
+            await admin.auth().deleteUser(uid); // Delete user from Firebase if it exists in MongoDB
+            return res.status(400).json({ message: 'User already exists' });
         }
 
         // Check if the user with the same username exists
         const existingUserByUsername = await User.findOne({ username });
         if (existingUserByUsername) {
+            await admin.auth().deleteUser(uid); // Delete user from Firebase if the username is taken
             return res.status(400).json({ message: 'Username already taken' });
         }
 
         const newUser = new User({
             uid,
+            email,
             username,
             firstname,
-            lastname
+            lastname,
         });
 
         await newUser.save();
-        res.status(201).json({message: 'User registered successfully', user: newUser});
+        res.status(201).json({ message: 'User registered successfully', user: newUser });
     } catch (error) {
-        res.status(400).json({message: 'Error registering user', error});
+        console.log('Deleting user from Firebase:', uid);
+        await admin.auth().deleteUser(uid); // Delete user from Firebase if there's an error registering in MongoDB
+        res.status(400).json({ message: 'Error registering user', error });
     }
+};
+
+exports.login = (req, res) => {
+    // Your logic for logging in a user
 };

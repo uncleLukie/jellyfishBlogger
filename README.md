@@ -19,6 +19,7 @@ features are planned, such as more robust error handling and much improved
 frontend user experience.
 
 ## How to set it up
+
 Docker is the method I use for my own dev environment, here's how to set it up:
 1. Clone the repo.
 2. Install the required dependencies in both the frontend and backend folders with `npm install`
@@ -30,5 +31,4 @@ Docker is the method I use for my own dev environment, here's how to set it up:
 8. Profit
 
 You can run it all locally if you prefer non-docker.
-
 

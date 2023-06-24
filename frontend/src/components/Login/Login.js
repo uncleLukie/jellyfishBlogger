@@ -1,85 +1,63 @@
-import React, { useState, forwardRef, useImperativeHandle } from 'react';
-import { Button, Container, TextField, Typography, Box } from '@mui/material';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../firebase/firebase';
+import React, { useState } from "react";
+import { auth, signInWithEmailAndPassword } from "../../firebase/firebase";
+import { TextField, Button, Grid, Typography, Link } from "@mui/material";
 
-//TODO: When sign up button is pressed make it close the Login modal completely
+function Login({ handleClose, handleOpenSignUp }) {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-const Login = forwardRef(({ setLoggedIn, close }, ref) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState(null);
-
-    useImperativeHandle(ref, () => ({
-        // You can add functions here that you want the parent component to access
-    }));
-
-    const login = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async (event) => {
+        event.preventDefault();
         try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            console.log('User logged in successfully:', userCredential.user);
-            setError(null);
-            setLoggedIn(true);
-            close();
+            await signInWithEmailAndPassword(auth, email, password);
+            handleClose();
         } catch (error) {
-            setError(error.message);
+            console.error("Error signing in", error);
         }
     };
 
+    const handleSignUpClick = () => {
+        handleClose();
+        handleOpenSignUp();
+    };
+
     return (
-        <Container component="main" maxWidth="xs">
-            <Box
-                sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}
-            >
-                <Typography component="h1" variant="h5">
-                    Sign in
-                </Typography>
-                <Box component="form" onSubmit={login} noValidate sx={{ mt: 1 }}>
+        <form onSubmit={handleSubmit}>
+            <Grid container direction="column" spacing={2}>
+                <Grid item>
                     <TextField
-                        variant="outlined"
-                        margin="normal"
+                        label="Email"
+                        type="email"
                         required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
+                </Grid>
+                <Grid item>
                     <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
                         label="Password"
                         type="password"
-                        id="password"
-                        autoComplete="current-password"
+                        required
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    {error && <Typography color="error">{error}</Typography>}
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                    >
-                        Sign In
+                </Grid>
+                <Grid item>
+                    <Button variant="contained" color="primary" type="submit">
+                        Login
                     </Button>
-                </Box>
-            </Box>
-        </Container>
+                </Grid>
+                <Grid item>
+                    <Typography>
+                        Don't have an account?
+                        <Link onClick={handleSignUpClick} style={{cursor: "pointer"}}>
+                            Sign Up
+                        </Link>
+                    </Typography>
+                </Grid>
+            </Grid>
+        </form>
     );
-});
+}
 
 export default Login;

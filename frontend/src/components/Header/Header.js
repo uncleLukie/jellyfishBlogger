@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { AppBar, Button, Toolbar, Typography, Modal, Box } from "@mui/material";
+import { Link } from 'react-router-dom';
 import { auth, signOut, onAuthStateChanged } from "../../firebase/firebase";
 import Login from "../Login/Login";
 import SignUp from "../SignUp/SignUp";
@@ -45,9 +46,14 @@ function Header() {
                     Jellyfish Blogger
                 </Typography>
                 {isUserSignedIn ? (
-                    <Button color="inherit" onClick={logout}>
-                        Logout
-                    </Button>
+                    <>
+                        <Button color="inherit" component={Link} to="/createpost">
+                            Create Post
+                        </Button>
+                        <Button color="inherit" onClick={logout}>
+                            Logout
+                        </Button>
+                    </>
                 ) : (
                     <>
                         <Button color="inherit" onClick={handleOpenLogin}>

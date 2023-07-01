@@ -7,15 +7,22 @@ const CreatePost = () => {
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
 
-    const { user } = useContext(UserContext);
+    const user = useContext(UserContext);
+
+    const uid = user ? user.uid : null;
 
     const submitPost = async () => {
+        if (!uid) {
+            alert('User not signed in');
+            return;
+        }
         try {
-            const response = await axios.post('http://localhost:5000/posts', {
+            console.log({ title, content, category, author: uid });
+            const response = await axios.post('/api/posts', {
                 title,
                 content,
                 category,
-                author: user.uid,
+                author: uid,
             });
             if (response.status === 201) {
                 alert('Post created successfully');

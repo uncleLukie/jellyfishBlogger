@@ -17,20 +17,13 @@ const CreatePost = () => {
             return;
         }
         try {
-            console.log({ title, content, category, author: uid });
-            const response = await axios.post('/api/posts', {
-                title,
-                content,
-                category,
-                author: uid,
-            });
-            if (response.status === 201) {
-                alert('Post created successfully');
-                setTitle('');
-                setContent('');
-                setCategory('');
-            }
+            await axios.post('/api/posts', { title, content, author: uid, category });
+            alert('Post created successfully');
+            setTitle('');
+            setContent('');
+            setCategory('');
         } catch (error) {
+            console.error(error);
             alert(`Failed to create post: ${error.message}`);
         }
     };

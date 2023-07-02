@@ -8,7 +8,7 @@ exports.createPost = async (req, res) => {
         const { title, content, author, category } = req.body;
 
         // Check if the author exists
-        const user = await User.findById(author);
+        const user = await User.findOne({ uid: author });
         if (!user) {
             return res.status(404).json({ message: 'Author not found' });
         }
@@ -19,12 +19,12 @@ exports.createPost = async (req, res) => {
         }
 
         // Check if the category exists
-        const categoryObj = await Category.findById(category);
+        const categoryObj = await Category.findOne({ name: category });
         if (!categoryObj) {
             return res.status(404).json({ message: 'Category not found' });
         }
 
-        const post = new Post({ title, content, author, category });
+        const post = new Post({ title, content, author: user.uid, category: categoryObj._id });
         await post.save();
         res.status(201).json(post);
     } catch (error) {
@@ -35,7 +35,13 @@ exports.createPost = async (req, res) => {
 // Get all posts
 exports.getAllPosts = async (req, res) => {
     try {
-        const posts = await Post.find().populate('author', 'username').populate('category', 'name');
+        const posts = await Post.find();
+        for (let post of posts) {
+            const user = await User.findOne({ uid: post.author });
+            const category = await Category.findById(post.category);
+            post.author = user;
+            post.category = category;
+        }
         res.status(200).json(posts);
     } catch (error) {
         res.status(400).json({ message: 'Error fetching posts', error });
@@ -46,10 +52,12 @@ exports.getAllPosts = async (req, res) => {
 exports.getPostById = async (req, res) => {
     try {
         const { id } = req.params;
-        const post = await Post.findById(id).populate('author', 'username').populate('category', 'name');
+        const post = await Post.findById(id);
         if (!post) {
             return res.status(404).json({ message: 'Post not found' });
         }
+        post.author = await User.findOne({ uid: post.author });
+        post.category = await Category.findById(post.category);
         res.status(200).json(post);
     } catch (error) {
         res.status(400).json({ message: 'Error fetching post', error });
@@ -61,8 +69,13 @@ exports.updatePost = async (req, res) => {
     try {
         const { id } = req.params;
         const { title, content, category } = req.body;
-        const post = await Post.findByIdAndUpdate(id, { title, content, category }, { new: true });
 
+        const categoryObj = await Category.findOne({ name: category });
+        if (!categoryObj) {
+            return res.status(404).json({ message: 'Category not found' });
+        }
+
+        const post = await Post.findByIdAndUpdate(id, { title, content, category: categoryObj._id }, { new: true });
         if (!post) {
             return res.status(404).json({ message: 'Post not found' });
         }
@@ -77,7 +90,6 @@ exports.deletePost = async (req, res) => {
     try {
         const { id } = req.params;
         const post = await Post.findByIdAndDelete(id);
-
         if (!post) {
             return res.status(404).json({ message: 'Post not found' });
         }

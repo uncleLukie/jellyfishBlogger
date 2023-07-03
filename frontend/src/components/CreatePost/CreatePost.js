@@ -8,6 +8,7 @@ const CreatePost = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
+    const [image, setImage] = useState('');
     const [categories, setCategories] = useState([]);
 
     const user = useContext(UserContext);
@@ -36,11 +37,12 @@ const CreatePost = () => {
         const categoryName = selectedCategory ? selectedCategory.name : '';
 
         try {
-            await axios.post('/api/posts', { title, content, author: uid, category: categoryName });
+            await axios.post('/api/posts', { title, content, author: uid, category: categoryName, image });
             alert('Post created successfully');
             setTitle('');
             setContent('');
             setCategory('');
+            setImage(''); // Clear image field
         } catch (error) {
             console.error(error);
             alert(`Failed to create post: ${error.message}`);
@@ -55,12 +57,13 @@ const CreatePost = () => {
                     <Grid item xs={12} md={8}>
                         <Box component="form" noValidate autoComplete="off" sx={{ '& > :not(style)': { m: 1 }, maxWidth: 500 }}>
                             <TextField label="Title" value={title} onChange={(e) => setTitle(e.target.value)} fullWidth />
+                            <TextField label="Image URL" value={image} onChange={(e) => setImage(e.target.value)} fullWidth />
                             <TextField
                                 label="Content"
                                 value={content}
                                 onChange={(e) => setContent(e.target.value)}
                                 multiline
-                                rows={12} // 3x larger content box
+                                rows={12}
                                 variant="outlined"
                                 fullWidth
                             />

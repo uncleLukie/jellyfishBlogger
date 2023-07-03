@@ -4,13 +4,14 @@ const Schema = mongoose.Schema;
 const postSchema = new Schema({
     title: { type: String, required: true },
     content: { type: String, required: true },
-    author: { type: String, ref: 'User', required: true }, // Changed to String
+    author: { type: String, ref: 'User', required: true },
     category: { type: Schema.Types.ObjectId, ref: 'Category' },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
+    image: { type: String }, // This is the new field
     comments: [
         {
-            user: { type: String, ref: 'User' }, // Changed to String
+            user: { type: String, ref: 'User' },
             content: { type: String, required: true },
             createdAt: { type: Date, default: Date.now },
             updatedAt: { type: Date, default: Date.now },
@@ -19,4 +20,3 @@ const postSchema = new Schema({
 });
 
 module.exports = mongoose.model('Post', postSchema);
-``

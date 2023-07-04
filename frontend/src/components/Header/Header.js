@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AppBar, Button, Toolbar, Typography, Modal, Box } from "@mui/material";
+import { AppBar, Button, Toolbar, Typography, Modal, Box, Container } from "@mui/material";
 import { Link } from 'react-router-dom';
 import { auth, signOut, onAuthStateChanged } from "../../firebase/firebase";
 import Login from "../Login/Login";
@@ -41,40 +41,59 @@ function Header() {
 
     return (
         <AppBar position="static">
-            <Toolbar>
-                <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                    Jellyfish Blogger
-                </Typography>
-                {isUserSignedIn ? (
-                    <>
-                        <Button color="inherit" component={Link} to="/createpost">
-                            Create Post
-                        </Button>
-                        <Button color="inherit" onClick={logout}>
-                            Logout
-                        </Button>
-                    </>
-                ) : (
-                    <>
-                        <Button color="inherit" onClick={handleOpenLogin}>
-                            Login
-                        </Button>
-                        <Button color="inherit" onClick={handleOpenSignUp}>
-                            Sign Up
-                        </Button>
-                    </>
-                )}
-                <Modal open={loginOpen} onClose={handleCloseLogin}>
-                    <Box sx={style}>
-                        <Login handleClose={handleCloseLogin} handleOpenSignUp={handleOpenSignUp} />
+            <Container maxWidth="lg">
+                <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
+                    <Typography
+                        variant="h6"
+                        component={Link}
+                        to="/"
+                        sx={{
+                            textDecoration: 'none',
+                            color: 'white',
+                            fontFamily: 'Courier New,Courier,monospace',
+                            '&:hover': {
+                                color: '#ff00fb',  // Change to the color you want on hover
+                            },
+                            '&:active': {
+                                color: '#08ff00',  // Change to the color you want on click
+                            }
+                        }}
+                    >
+                        jellyfishBlogger
+                    </Typography>
+                    <Box>
+                        {isUserSignedIn ? (
+                            <>
+                                <Button color="inherit" component={Link} to="/createpost">
+                                    Create Post
+                                </Button>
+                                <Button color="inherit" onClick={logout}>
+                                    Logout
+                                </Button>
+                            </>
+                        ) : (
+                            <>
+                                <Button color="inherit" onClick={handleOpenLogin}>
+                                    Login
+                                </Button>
+                                <Button color="inherit" onClick={handleOpenSignUp}>
+                                    Sign Up
+                                </Button>
+                            </>
+                        )}
                     </Box>
-                </Modal>
-                <Modal open={signUpOpen} onClose={handleSuccessfulRegistration}>
-                    <Box sx={style}>
-                        <SignUp handleClose={handleSuccessfulRegistration} />
-                    </Box>
-                </Modal>
-            </Toolbar>
+                    <Modal open={loginOpen} onClose={handleCloseLogin}>
+                        <Box sx={style}>
+                            <Login handleClose={handleCloseLogin} handleOpenSignUp={handleOpenSignUp} />
+                        </Box>
+                    </Modal>
+                    <Modal open={signUpOpen} onClose={handleSuccessfulRegistration}>
+                        <Box sx={style}>
+                            <SignUp handleClose={handleSuccessfulRegistration} />
+                        </Box>
+                    </Modal>
+                </Toolbar>
+            </Container>
         </AppBar>
     );
 }

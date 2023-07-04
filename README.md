@@ -12,11 +12,21 @@ Also, Firebase authentication is used for secure user registration and login.
 
 ## Under construction
 
-jellyfishBlogger is currently in the development stage. Most of the core backend features 
-have been implemented, including user registration, authentication, 
-creating and updating posts, and adding comments. Future improvements and 
-features are planned, such as more robust error handling and much improved 
-frontend user experience.
+jellyfishBlogger is currently in the development stage. Here's what's working:
+
+- Sign up
+- Login
+- Post creation
+- Viewable Blog list
+- Markup blog parsing
+
+### TODO:
+- Comments on blog post
+- UI Improvements
+- Category filtering
+- Blog search
+- User Profile
+- Blog/comment deletion
 
 ## How to set it up
 

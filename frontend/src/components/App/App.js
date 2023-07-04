@@ -6,6 +6,7 @@ import theme from '../../theme/theme';
 import { ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { UserProvider } from '../UserContext/UserContext';
+import BlogPost from '../BlogPost/BlogPost';
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                     <div className="App">
                         <Routes>
                             <Route path="/createpost" element={<CreatePost />} />
+                            <Route path="/post/:id" element={<BlogPost />} />
                             <Route path="/" element={<HomePage />} />
                         </Routes>
                     </div>

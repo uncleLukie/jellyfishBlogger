@@ -26,8 +26,16 @@ const BlogList = () => {
 
     return (
         <Box sx={{ mt: 4 }}>
-            <Typography variant="h4" gutterBottom>
-                Blog Posts
+            <Typography
+                variant="h4"
+                gutterBottom
+                sx={{
+                    color: 'darkblue',
+                    fontWeight: 'bold',
+                    textShadow: '1px 1px 2px black'
+                }}
+            >
+                Recent Blogs
             </Typography>
             {blogPosts.map((post, index) => (
                 <Card key={post._id} sx={{ mt: 4, transition: '0.3s', '&:hover': { transform: 'scale(1.02)' } }}>

@@ -35,7 +35,7 @@ Docker is the method I use for my own dev environment, here's how to set it up:
 2. Install the required dependencies in both the frontend and backend folders with `npm install`
 3. Set up a Firebase project and enable Email/Password authentication. Obtain the Firebase configuration objeect for your app.
 4. Use the .env-template file to create your own .env file, fill in each detail correctly.
-5. Run the docker-compose in the root directory with `docker-compose up --build`
+5. Run the docker-compose in the root directory with `docker compose up --build`
 6. Access the Nginx proxy which serves the frontend and backend at http://localhost:80
 7. ???
 8. Profit

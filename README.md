@@ -3,7 +3,7 @@ A full-stack blog powered by React.js, Express.js, MongoDB, Firebase authenticat
 Material-UI.
 
 ## What is it?
-jellyfishBlogger is a full-stack web applicaton that allows verified users to create, edit,
+jellyfishBlogger is a MERN stack web applicaton that allows verified users to create, edit,
 and manage blog posts. Users can sign up, comment on articles, and post their own articles
 (if they are permitted to). The backend is built using Express.js and MongoDB, while the
 frontend is built using React.js and Material-UI for a responsive and intuitive user interface.

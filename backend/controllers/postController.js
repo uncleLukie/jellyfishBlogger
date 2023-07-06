@@ -35,7 +35,16 @@ exports.createPost = async (req, res) => {
 // Get all posts
 exports.getAllPosts = async (req, res) => {
     try {
-        const posts = await Post.find().populate('category', 'name');
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 5;
+        const skipIndex = (page - 1) * limit;
+
+        const posts = await Post.find()
+            .sort({ createdAt: -1 })
+            .populate('category', 'name')
+            .skip(skipIndex)
+            .limit(limit);
+
         const populatedPosts = await Promise.all(
             posts.map(async post => {
                 const author = await User.findOne({ uid: post.author });

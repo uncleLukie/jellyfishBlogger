@@ -1,3 +1,4 @@
+const cors = require('cors');
 require('dotenv').config();
 
 const express = require('express');
@@ -16,6 +17,9 @@ const postRoutes = require('./routes/postRoutes');
 // Add the following line to parse incoming JSON data
 app.use(express.json());
 
+// CORS middleware configuration
+app.use(cors());
+
 app.use('/api/verifyToken', verifyToken);
 app.use('/api/users', userRoutes);
 app.use('/api/categories', categoryRoutes);
@@ -28,12 +32,10 @@ mongoose.connect(MONGODB_URI, {
     .then(() => console.log('Connected to MongoDB'))
     .catch((err) => console.error('Error connecting to MongoDB:', err));
 
-
 // An example API endpoint
 app.get('/api/hello', (req, res) => {
     res.json({ message: 'Hello from the backend!' });
 });
-
 
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is running on port ${PORT}`);

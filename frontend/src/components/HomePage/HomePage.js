@@ -2,11 +2,11 @@ import React from 'react';
 import Header from '../Header/Header';
 import BlogList from '../BlogList/BlogList';
 import Footer from '../Footer/Footer';
-import { Container, Grid } from '@mui/material';
+import { Container, Grid, Box } from '@mui/material';
 
 const HomePage = () => {
     return (
-        <div>
+        <Box style={{ backgroundColor: '#F1F5F9', minHeight: '100vh' }}>
             <Header />
             <Container maxWidth="lg">
                 <Grid container spacing={4}>
@@ -16,7 +16,7 @@ const HomePage = () => {
                 </Grid>
             </Container>
             <Footer />
-        </div>
+        </Box>
     );
 };
 

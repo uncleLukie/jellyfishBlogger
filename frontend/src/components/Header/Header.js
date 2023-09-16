@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AppBar, Button, Toolbar, Typography, Modal, Box, Container } from "@mui/material";
+import { AppBar, Button, Toolbar, Typography, Modal, Box, Container, Avatar  } from "@mui/material";
 import { Link } from 'react-router-dom';
 import { auth, signOut, onAuthStateChanged } from "../../firebase/firebase";
 import Login from "../Login/Login";
@@ -40,44 +40,44 @@ function Header() {
     };
 
     return (
-        <AppBar position="static">
+        <AppBar position="static" style={{ backgroundColor: '#1E293B' }}>
             <Container maxWidth="lg">
                 <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
-                    <Typography
-                        variant="h6"
-                        component={Link}
-                        to="/"
-                        sx={{
-                            textDecoration: 'none',
-                            color: 'white',
-                            fontFamily: 'Courier New,Courier,monospace',
-                            '&:hover': {
-                                color: '#ff00fb',  // Change to the color you want on hover
-                            },
-                            '&:active': {
-                                color: '#08ff00',  // Change to the color you want on click
-                            }
-                        }}
-                    >
-                        jellyfishBlogger
-                    </Typography>
+                    <Box display="flex" alignItems="center">
+                        <Avatar alt="jellyfishBlogger icon" src="/jellygreen.png" style={{ marginRight: '8px' }} />
+                        <Typography
+                            variant="h6"
+                            component={Link}
+                            to="/"
+                            sx={{
+                                textDecoration: 'none',
+                                color: 'white',
+                                fontFamily: 'Lato, sans-serif',
+                                '&:hover': {
+                                    backgroundColor: '#2D4A69',
+                                },
+                            }}
+                        >
+                            jellyfishBlogger
+                        </Typography>
+                    </Box>
                     <Box>
                         {isUserSignedIn ? (
                             <>
-                                <Button color="inherit" component={Link} to="/createpost">
-                                    Create Post
+                                <Button color="inherit" component={Link} to="/createpost" style={{ '&:hover': { color: '#1E293B', backgroundColor: '#E5E7EB' } }}>
+                                    ink it
                                 </Button>
-                                <Button color="inherit" onClick={logout}>
-                                    Logout
+                                <Button color="inherit" onClick={logout} style={{ '&:hover': { color: '#1E293B', backgroundColor: '#E5E7EB' } }}>
+                                    drift out
                                 </Button>
                             </>
                         ) : (
                             <>
-                                <Button color="inherit" onClick={handleOpenLogin}>
-                                    Login
+                                <Button color="inherit" onClick={handleOpenLogin} style={{ '&:hover': { color: '#1E293B', backgroundColor: '#E5E7EB' } }}>
+                                    ride the tide
                                 </Button>
-                                <Button color="inherit" onClick={handleOpenSignUp}>
-                                    Sign Up
+                                <Button color="inherit" onClick={handleOpenSignUp} style={{ '&:hover': { color: '#1E293B', backgroundColor: '#E5E7EB' } }}>
+                                    join the swarm
                                 </Button>
                             </>
                         )}

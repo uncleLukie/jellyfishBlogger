@@ -44,12 +44,19 @@ const BlogList = () => {
                 variant="h4"
                 gutterBottom
                 sx={{
-                    color: 'darkblue',
+                    color: '#1E293B',
                     fontWeight: 'bold',
-                    textShadow: '1px 1px 2px black'
+                    fontFamily: 'Lato, sans-serif',
+                    mb: 2,
+                    transition: '0.3s',
+                    cursor: 'pointer',
+                    '&:hover': {
+                        transform: 'scale(1.05)',
+                        color: '#3E4C6D'
+                    }
                 }}
             >
-                Recent Blogs
+                the smack~
             </Typography>
             <InfiniteScroll
                 dataLength={blogPosts.length}
@@ -63,7 +70,17 @@ const BlogList = () => {
                 }
             >
                 {blogPosts.map((post, index) => (
-                    <Card key={post._id} sx={{ mt: 4, transition: '0.3s', '&:hover': { transform: 'scale(1.02)' } }}>
+                    <Card
+                        key={post._id}
+                        sx={{
+                            mt: 4,
+                            transition: '0.3s',
+                            '&:hover': { transform: 'scale(1.02)' },
+                            overflowX: 'hidden',
+                            overflowY: 'hidden',
+                            mb: 1,
+                        }}
+                    >
                         <CardActionArea onClick={() => goToPost(post._id)}>
                             <Grid container spacing={2} flexDirection={index % 2 === 0 ? 'row-reverse' : 'row'} alignItems="stretch">
                                 <Grid item xs={12} md={6}>

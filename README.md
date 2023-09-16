@@ -9,8 +9,11 @@ and manage blog posts. Users can sign up, comment on articles, and post their ow
 frontend is built using React.js and Material-UI for a responsive and intuitive user interface.
 Also, Firebase authentication is used for secure user registration and login. 
 
+![chrome_xmkikRW496](https://github.com/uncleLukie/jellyfishBlogger/assets/22523084/f9105e5b-0b77-444d-a68f-2e06e7ca52ce)
+
 
 ## Under construction
+
 
 jellyfishBlogger is currently in the development stage. Here's what's working:
 
